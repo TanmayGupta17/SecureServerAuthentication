@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>OTP Verification</title>
+  </head>
+  <body>
+    <h2>OTP Verification</h2>
+
+    <!-- Form to send OTP to user's email -->
+    <form action="{{ url_for('send_otp') }}" method="POST">
+      <label for="email">Enter Your Email:</label><br />
+      <input type="email" id="email" name="email" required /><br /><br />
+
+      <input type="submit" value="Send OTP" />
+    </form>
+
+    <!-- Form to verify OTP -->
+    <form action="{{ url_for('verify_otp') }}" method="POST">
+      <label for="otp">Enter OTP:</label><br />
+      <input type="text" id="otp" name="otp" required /><br /><br />
+
+      <input type="submit" value="Verify OTP" />
+    </form>
+
+    <p>{{ message }}</p>
+  </body>
+</html>
