@@ -259,7 +259,7 @@ app.config['PERMANENT_SESSION_LIFETIME'] = timedelta(minutes=15)  # Lock duratio
 SMTP_SERVER = 'smtp.gmail.com'
 SMTP_PORT = 587
 EMAIL_ADDRESS = 'guptatanmay921@gmail.com'
-EMAIL_PASSWORD = 'tanmay123'
+EMAIL_PASSWORD = 'tvok tuew ntwm adel'
 
 # Function to generate OTP
 def generate_otp():
@@ -347,7 +347,7 @@ def decrypt_aes(iv, ciphertext):
 # Route to render home
 @app.route('/')
 def home():
-    return redirect(url_for('register'))
+    return redirect(url_for('login'))
 
 # User registration route
 @app.route('/register', methods=['GET', 'POST'])
@@ -424,7 +424,9 @@ def login():
                 session['login_attempts'] += 1
                 if session['login_attempts'] >= 3:
                     session['account_locked'] = True
-                    send_security_email(username)  # Send email on account lock
+                    cursor.execute("SELECT email FROM users WHERE username=%s", (username,))
+                    user_email = cursor.fetchone()['email']
+                    send_security_email(username, user_email)  # Send email on account lock
                     return "Account locked due to too many failed attempts. Check your email."
 
                 return "Invalid credentials. Try again."
@@ -547,10 +549,14 @@ def encrypt_and_display():
     # Render the encryption details on a results page
     return render_template('encryption_result.html', key=key, iv=iv, ciphertext=ciphertext)
 
-def send_security_email(username):
+import smtplib
+from email.mime.multipart import MIMEMultipart
+from email.mime.text import MIMEText
+
+def send_security_email(username, user_email):
     msg = MIMEMultipart()
     msg['From'] = EMAIL_ADDRESS
-    msg['To'] = 'tanmaygupta1706@gmail.com'  # Replace with the registered user's email
+    msg['To'] = user_email  # Use the user's registered email
     msg['Subject'] = "Security Alert: Login Attempt Detected"
 
     body = f"""
@@ -569,7 +575,7 @@ def send_security_email(username):
         server = smtplib.SMTP(SMTP_SERVER, SMTP_PORT)
         server.starttls()
         server.login(EMAIL_ADDRESS, EMAIL_PASSWORD)
-        server.sendmail(EMAIL_ADDRESS, 'Tanmaygupta1706@gmail.com', msg.as_string())
+        server.sendmail(EMAIL_ADDRESS, user_email, msg.as_string())
         server.quit()
         print("Security email sent successfully.")
     except Exception as e:
