@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Upload File</title>
+  </head>
+  <body>
+    <h1>Upload a File</h1>
+    <form
+      action="{{ url_for('encrypt_and_display') }}"
+      method="post"
+      enctype="multipart/form-data"
+    >
+      <label for="file">Choose file to encrypt:</label>
+      <input type="file" name="file" id="file" />
+      <button type="submit">Upload and Encrypt</button>
+    </form>
+  </body>
+</html>

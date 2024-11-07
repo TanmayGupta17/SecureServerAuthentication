@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Dashboard</title>
+  </head>
+  <body>
+    <h1>Uploaded Files</h1>
+    <ul>
+      {% for file in files %}
+      <li>{{ file }}</li>
+      {% else %}
+      <li>No files uploaded.</li>
+      {% endfor %}
+    </ul>
+    <a href="{{ url_for('upload') }}">Upload another file</a>
+  </body>
+</html>

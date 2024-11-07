@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Encryption Results</title>
+</head>
+<body>
+    <h1>Encryption Details</h1>
+    <p><strong>Encryption Key:</strong> {{ key }}</p>
+    <p><strong>Initialization Vector (IV):</strong> {{ iv }}</p>
+    <p><strong>Ciphertext:</strong> {{ ciphertext }}</p>
+    <a href="{{ url_for('dashboard') }}">Back to Dashboard</a>
+</body>
+</html>
